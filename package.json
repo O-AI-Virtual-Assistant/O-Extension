@@ -37,6 +37,11 @@
         "command": "O.helloWorld",
         "category": "O",
         "title": "Hello World"
+      },
+      {
+        "command": "O.AskO",
+        "category": "O",
+        "title": "Make a Query"
       }
     ]
   },
