@@ -1,12 +1,14 @@
 <script lang='ts'>
   import { onMount } from "svelte";
-  let text = "";
+  let chat = "";
+  let query = "";
+  let response = "";
 
     onMount(() => {
         window.addEventListener('message', event => {
             switch (event.data.type) {
                 case 'AskO':
-                    text = event.data.value;
+                    query = event.data.value;
                     break;
             }
         });
@@ -15,15 +17,20 @@
 </script>
 
 <style>
-    
+p{
+    font: 20px ubuntu;
+}
 </style>
 
-<input type="text" placeholder="What's on your mind?">
-<button>Go</button>
+<input type="text" placeholder="What's on your mind?" bind:value={query} />
 
-<p>{text}</p>
 
 <!-- svelte-ignore missing-declaration -->
 <button on:click={() =>{
-            tsvscode.postMessage({ type: 'onInfo' , value: "land of the free"});
-        }}>click</button>
+    tsvscode.postMessage({ type: 'onInfo' , value: "O is Working"});
+    chat += query;
+    chat += "\n";
+    query = "";
+}}>Go</button>
+
+<p>{chat}</p>
