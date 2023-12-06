@@ -28,7 +28,7 @@ export class HelloWorldPanel {
     // Otherwise, create a new panel.
     const panel = vscode.window.createWebviewPanel(
       HelloWorldPanel.viewType,
-      "V-todo",
+      "O-Hello User",
       column || vscode.ViewColumn.One,
       {
         // Enable javascript in the webview
