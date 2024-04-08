@@ -42,6 +42,11 @@
         "command": "O.AskO",
         "category": "O",
         "title": "Make a Query"
+      },
+      {
+        "command": "O.unitTest",
+        "category": "O",
+        "title": "Make a Unit Test"
       }
     ]
   },
