@@ -2,9 +2,12 @@ import * as vscode from "vscode";
 import { HelloWorldPanel } from "./HelloWorld";
 import { SidebarProvider } from "./SidebarProvider";
 import { unitTest } from "./unitTest";
+import { authenticate } from "./authenticate";
+import { TokenManager } from "./TokenManager";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "O" is now active!');
+  TokenManager.globalState = context.globalState;
 
   const item = vscode.window.createStatusBarItem(
     vscode.StatusBarAlignment.Right,
@@ -22,6 +25,12 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand("O.helloWorld", () => {
       HelloWorldPanel.createOrShow(context.extensionUri);
+    })
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("O.authenticate", () => {
+      authenticate();
     })
   );
   
