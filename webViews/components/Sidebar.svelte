@@ -2,6 +2,15 @@
   import { onMount } from "svelte";
   import UnitTest from "./UnitTest.svelte";
   import type { User } from "../types";
+  import Menu from "./Menu.svelte";
+
+  export let onExplainCode;
+  export let onMakeDocumentation;
+  export let onNewChat;
+  export let onEditCode;
+  export let onGenerateUnitTests;
+  export let onFindCodeSmells;
+  export let onCustomCommands;
 
   let accessToken = "";
   let loading = true;
@@ -49,4 +58,12 @@
   >
 {/if}
 
-<UnitTest />
+<Menu
+  {onExplainCode}
+  {onMakeDocumentation}
+  {onNewChat}
+  {onEditCode}
+  {onGenerateUnitTests}
+  {onFindCodeSmells}
+  {onCustomCommands}
+/>
