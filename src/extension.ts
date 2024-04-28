@@ -1,9 +1,15 @@
 import * as vscode from "vscode";
 import { HelloWorldPanel } from "./HelloWorld";
 import { SidebarProvider } from "./SidebarProvider";
+import { ChatPanelProvider } from "./chatPanelProvider";
+import { unitTest } from "./unitTest";
+import { authenticate } from "./authenticate";
+import { TokenManager } from "./TokenManager";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "O" is now active!');
+
+  TokenManager.globalState = context.globalState;
 
   const item = vscode.window.createStatusBarItem(
     vscode.StatusBarAlignment.Right,
@@ -14,6 +20,8 @@ export function activate(context: vscode.ExtensionContext) {
   item.command = "O.AskO";
 
   const sidebarProvider = new SidebarProvider(context.extensionUri);
+  // const chatProvider = new ChatPanelProvider(context.extensionUri);
+  
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider("O-sidebar", sidebarProvider)
   );
@@ -23,6 +31,24 @@ export function activate(context: vscode.ExtensionContext) {
       HelloWorldPanel.createOrShow(context.extensionUri);
     })
   );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("O.authenticate", () => {
+      authenticate(()=>{});
+    })
+  );
+  
+  context.subscriptions.push(
+    vscode.commands.registerCommand("O.unitTest", () => {
+      unitTest();
+    })
+  );
+
+
+  vscode.commands.registerCommand('O.newChat', () => {
+    console.log("Command O.newChat triggered");
+    ChatPanelProvider.createOrShow(context.extensionUri);
+  })
 
   context.subscriptions.push(
     vscode.commands.registerCommand("O.AskO", () => {

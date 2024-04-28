@@ -1,36 +1,69 @@
-<script lang='ts'>
+<script lang="ts">
   import { onMount } from "svelte";
-  let chat = "";
-  let query = "";
-  let response = "";
+  // import UnitTest from "./UnitTest.svelte";
+  import type { User } from "../types";
+  import Menu from "./Menu.svelte";
 
-    onMount(() => {
-        window.addEventListener('message', event => {
-            switch (event.data.type) {
-                case 'AskO':
-                    query = event.data.value;
-                    break;
-            }
-        });
+  export let onExplainCode;
+  export let onMakeDocumentation;
+  export let onNewChat;
+  export let onEditCode;
+  export let onGenerateUnitTests;
+  export let onFindCodeSmells;
+  export let onCustomCommands;
+
+  let accessToken = "";
+  let loading = true;
+  let user: User | null = null;
+
+  onMount(async () => {
+    window.addEventListener("message", async (event) => {
+      switch (event.data.type) {
+        case "token":
+          accessToken = event.data.value;
+          const response = await fetch(`${apiBaseUrl}/me`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+          const data = await response.json();
+          user = data.user;
+          loading = false;
+          break;
+      }
     });
 
+    tsvscode.postMessage({ type: "get-token", value: undefined });
+  });
 </script>
 
-<style>
-p{
-    font: 20px ubuntu;
-}
-</style>
+{#if loading}
+  <p>Loading...</p>
+{:else if user}
+  <h1>Hello {user.name}</h1>
+  <!-- svelte-ignore missing-declaration -->
+  <button
+    on:click={() => {
+      accessToken = "";
+      user = null;
+      tsvscode.postMessage({ type: "logout", value: undefined });
+    }}>Logout</button
+  >
+{:else}
+  <!-- svelte-ignore missing-declaration -->
+  <button
+    on:click={() => {
+      tsvscode.postMessage({ type: "authenticate", value: undefined });
+    }}>Log In</button
+  >
+{/if}
 
-<input type="text" placeholder="What's on your mind?" bind:value={query} />
-
-
-<!-- svelte-ignore missing-declaration -->
-<button on:click={() =>{
-    tsvscode.postMessage({ type: 'onInfo' , value: "O is Working"});
-    chat += query;
-    chat += "\n";
-    query = "";
-}}>Go</button>
-
-<p>{chat}</p>
+<Menu
+  {onExplainCode}
+  {onMakeDocumentation}
+  {onNewChat}
+  {onEditCode}
+  {onGenerateUnitTests}
+  {onFindCodeSmells}
+  {onCustomCommands}
+/>

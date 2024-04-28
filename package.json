@@ -42,6 +42,26 @@
         "command": "O.AskO",
         "category": "O",
         "title": "Make a Query"
+      },
+      {
+        "command": "O.unitTest",
+        "category": "O",
+        "title": "Make a Unit Test"
+      },
+      {
+        "command": "O.authenticate",
+        "category": "O",
+        "title": "Authenticate"
+      },
+      {
+        "command": "O.newChat",
+        "category": "O",
+        "title": "New Chat"
+      },
+      {
+        "command": "O.backToMenu",
+        "title": "Back to Menu",
+        "category": "O"
       }
     ]
   },
@@ -63,6 +83,7 @@
     "@tsconfig/svelte": "^5.0.2",
     "@types/mocha": "^10.0.3",
     "@types/node": "18.x",
+    "@types/polka": "^0.5.7",
     "@types/vscode": "^1.84.0",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
@@ -83,6 +104,8 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "es6-promise": "^4.2.8"
+    "es6-promise": "^4.2.8",
+    "polka": "^0.5.2"
+
   }
 }
