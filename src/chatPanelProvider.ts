@@ -49,19 +49,22 @@ export class ChatPanelProvider {
   }
 
   private _getHtmlForWebview(webview: vscode.Webview) {
-    const nonce = getNonce();
+    
     const styleResetUri = webview.asWebviewUri(
       vscode.Uri.joinPath(this.extensionUri, "media", "reset.css")
     );
     const styleVSCodeUri = webview.asWebviewUri(
       vscode.Uri.joinPath(this.extensionUri, "media", "vscode.css")
     );
+    
     const styleMainUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this.extensionUri, "out", "compiled/sidebar.css")
+      vscode.Uri.joinPath(this.extensionUri, "out", "compiled/Chat.css")
     );
     const scriptUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this.extensionUri, "out", "compiled/sidebar.js")
+      vscode.Uri.joinPath(this.extensionUri, "out", "compiled/Chat.js")
     );
+
+    const nonce = getNonce();
 
     return `<!DOCTYPE html>
       <html lang="en">
@@ -77,11 +80,6 @@ export class ChatPanelProvider {
         </script>
       </head>
       <body>
-        <div id="chat">
-          <h1>Chat with O</h1>
-          <input type="text" id="message" />
-          <button onclick="sendMessage()">Send</button>
-        </div>
         <script nonce="${nonce}" src="${scriptUri}"></script>
       </body>
       </html>`;
