@@ -4,6 +4,7 @@ import { SidebarProvider } from "./SidebarProvider";
 import { unitTest } from "./unitTest";
 import { authenticate } from "./authenticate";
 import { TokenManager } from "./TokenManager";
+import { makeDocumentCommand } from './commands/makeDocument';
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "O" is now active!');
@@ -66,6 +67,11 @@ export function activate(context: vscode.ExtensionContext) {
       }
     })
   );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("O.makeDocument", makeDocumentCommand)
+  );
 }
+
 
 export function deactivate() {}
