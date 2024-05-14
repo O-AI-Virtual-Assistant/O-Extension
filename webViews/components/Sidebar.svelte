@@ -3,13 +3,13 @@
   import UnitTest from "./UnitTest.svelte";
   import type { User } from "../types";
   import Menu from "./Menu.svelte";
-
+  import { findCodeSmellCommand } from "../../src/commands/findcodesmell";
   export let onExplainCode;
   export let onMakeDocumentation;
   export let onNewChat;
   export let onEditCode;
   export let onGenerateUnitTests;
-  export let onFindCodeSmells;
+  export { findCodeSmellCommand }; 
   export let onCustomCommands;
 
   let accessToken = "";
@@ -64,6 +64,6 @@
   {onNewChat}
   {onEditCode}
   {onGenerateUnitTests}
-  {onFindCodeSmells}
+  {findCodeSmellCommand}
   {onCustomCommands}
 />

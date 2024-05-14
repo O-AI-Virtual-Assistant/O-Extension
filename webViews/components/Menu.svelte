@@ -4,7 +4,7 @@
     export let onNewChat;
     export let onEditCode;
     export let onGenerateUnitTests;
-    export let onFindCodeSmells;
+    import { findCodeSmellCommand } from ".../src/commands/findcodesmell";
     export let onCustomCommands;
   
     function handleExplainCode() {
@@ -38,10 +38,10 @@
     }
   
     function handleFindCodeSmells() {
-      if (onFindCodeSmells) {
-        onFindCodeSmells();
-      }
-    }
+    // Call the findCodeSmellCommand function directly
+    findCodeSmellCommand();
+}
+
   
     function handleCustomCommands() {
       if (onCustomCommands) {

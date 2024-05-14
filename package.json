@@ -57,6 +57,11 @@
         "command": "O.makeDocument",
         "category": "O",
         "title": "Make Documentation"
+      },
+      {
+        "command": "O.findCodeSmells",
+        "category": "O",
+        "title": "Find Code Smells"
       }
     ]
   },
