@@ -30,6 +30,7 @@
   </div>
   <input type="text" bind:value={message} on:keyup="{event => event.key === 'Enter' && sendMessage()}" placeholder="Type a message...">
   <button on:click="{sendMessage}">Send</button>
+  <h1>hello are you here </h1>
 </main>
 
 <style>
@@ -45,7 +46,7 @@
     border: 1px solid #ccc;
     min-height: 200px;
     margin-bottom: 10px;
-    padding: 10px;
+    padding: 100px;
     overflow-y: auto;
   }
 
