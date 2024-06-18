@@ -101,7 +101,7 @@
   "dependencies": {
     "@types/axios": "^0.14.0",
     "axios": "^1.6.8",
-    "openai": "^4.42.0",
+    "openai": "^4.0.0",
     "polka": "^0.5.2"
   }
 }

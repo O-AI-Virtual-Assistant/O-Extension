@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { Request, Response, Router } from 'express';
 import { OpenAI } from 'openai';
 
-const apiKey='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';
+const apiKey='sk-proj-v7vk1qBAkYHA8fOtXhqvT3BlbkFJ8VBIdph3fJ7ya5kxDaXf';
 
 const openai = new OpenAI({ apiKey: apiKey });
 
@@ -13,15 +13,22 @@ export const makeDocumentCommand = async () => {
         return;
     }
 
-    let generatedDocument = await generateDocument(selectedText);
-    if (!generatedDocument) {
-        generatedDocument = '//lol,where is the api key?';
-        vscode.window.showErrorMessage('Failed to generate document.');
-        //return;
-    }
+    await vscode.window.withProgress({
+        location: vscode.ProgressLocation.Notification,
+        title: "Generating Document...",
+        cancellable: false
+    }, async (progress) => {
+        progress.report({ increment: 0 });
+        
+        let generatedDocument = await generateDocument(selectedText);
+        if (!generatedDocument) {
+            vscode.window.showErrorMessage('Failed to generate document.');
+            return;
+        }
 
-    await replaceCodeWithDocument(generatedDocument);
-    await displayReplacedDocument();
+        await replaceCodeWithDocument(generatedDocument);
+        await displayReplacedDocument();
+    });
 };
 
 const getSelectedText = async () => {
@@ -35,14 +42,13 @@ const getSelectedText = async () => {
 };
 
 export const generateDocument = async (selectedCode: string) => {
-    const userMessage = 'Can you generate a document for the following code: ' + selectedCode;
-
+    const systemMessage = "act as a senior software engineer.First,You will be provided with a piece of code.second,define the programming language of this piece of code.third,specify the right comments operator.fourth,generate comments to explain what this code does line by line.fifth,return the same piece of code with the generated comments.finally,Only respond with code as plain text without code block syntax around it.";
     try {
         const response = await openai.chat.completions.create({
-            model: 'gpt-3.5-turbo',
-            messages: [{ role: 'user', content: userMessage }],
+            model: 'gpt-4o-2024-05-13',
+            messages: [{ role: 'system', content: systemMessage },{role : 'user', content: selectedCode}],
         });
-
+        console.log(response);
         const answer = response.choices.map((out) => out.message.content).join(' ');
         return answer;
     } catch (error) {
@@ -73,6 +79,6 @@ export const displayReplacedDocument = async () => {
         return;
     }
 
-    await editor.document.save();
+    // await editor.document.save();
     vscode.window.showTextDocument(editor.document);
 };
