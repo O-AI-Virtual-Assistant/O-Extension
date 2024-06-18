@@ -52,7 +52,12 @@
         "command": "O.authenticate",
         "category": "O",
         "title": "Authenticate"
-      }
+      },
+      {
+        "command": "O.findCodeSmell",
+        "category": "O",
+        "title": "Find Code Smell"
+    }
     ]
   },
   "scripts": {
