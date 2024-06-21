@@ -185,11 +185,6 @@ private updateChatInView(message: string) {
         </script>
 			</head>
       <body>
-        <div id="chat">
-          <h1>Chat with O</h1>
-          <input type="text" id="message" />
-          <button onclick="sendMessage()">Send</button>
-        </div>
         <script nonce="${nonce}" src="${scriptUri}"></script>
       </body>
       </html>`;
