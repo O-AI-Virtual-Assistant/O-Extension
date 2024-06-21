@@ -30,6 +30,7 @@
 
 
     function handleNewChat() {
+      console.log("in handle new chat")
       // Post a message to the VS Code extension to trigger opening the chat panel
       tsvscode.postMessage({ type: 'openChatPanel' });
     }
