@@ -12,7 +12,6 @@
   "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
-
     "viewsContainers": {
       "activitybar": [
         {
@@ -105,8 +104,11 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "@types/highlight.js": "^10.1.0",
+    "@types/marked": "^6.0.0",
     "es6-promise": "^4.2.8",
+    "highlight.js": "^11.9.0",
+    "marked": "^13.0.0",
     "polka": "^0.5.2"
-
   }
 }
