@@ -58,8 +58,7 @@
         "category": "O",
         "title": "Find Code Smell"
       }
-    ]
-    ,
+    ],
     "menus": {
       "editor/context": [
         {
@@ -114,6 +113,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "openai": "^4.52.0",
     "polka": "^0.5.2"
   }
