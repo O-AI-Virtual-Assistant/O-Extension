@@ -46,7 +46,7 @@
       {
         "command": "O.unitTest",
         "category": "O",
-        "title": "Make a Unit Test"
+        "title": "Generate Unit Tests"
       },
       {
         "command": "O.authenticate",
@@ -68,7 +68,7 @@
           "group": "navigation"
         },
         {
-          "command": "O.authenticate",
+          "command": "O.unitTest",
           "when": "editorTextFocus",
           "group": "navigation"
         }
