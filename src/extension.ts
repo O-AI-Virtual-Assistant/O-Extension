@@ -5,6 +5,7 @@ import { ChatPanelProvider } from "./chatPanelProvider";
 import { unitTest } from "./unitTest";
 import { authenticate } from "./authenticate";
 import { TokenManager } from "./TokenManager";
+import { makeCodeSmellCommand } from "./commands/findcodesmell";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "O" is now active!');
@@ -76,6 +77,8 @@ export function activate(context: vscode.ExtensionContext) {
       }
     })
   );
+  let disposable = vscode.commands.registerCommand('O.findCodeSmell', makeCodeSmellCommand);
+  context.subscriptions.push(disposable);
 }
 
 export function deactivate() {}

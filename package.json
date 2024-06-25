@@ -62,7 +62,12 @@
         "command": "O.backToMenu",
         "title": "Back to Menu",
         "category": "O"
+      },
+      {"command": "O.findCodeSmell",
+        "category": "O",
+        "title": "Find Code Smell"
       }
+      
     ]
   },
   "scripts": {
