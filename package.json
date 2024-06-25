@@ -57,8 +57,23 @@
         "command": "O.findCodeSmell",
         "category": "O",
         "title": "Find Code Smell"
-    }
+      }
     ]
+    ,
+    "menus": {
+      "editor/context": [
+        {
+          "command": "O.authenticate",
+          "when": "editorTextFocus",
+          "group": "navigation"
+        },
+        {
+          "command": "O.authenticate",
+          "when": "editorTextFocus",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
@@ -99,6 +114,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "openai": "^4.52.0",
     "polka": "^0.5.2"
   }
 }

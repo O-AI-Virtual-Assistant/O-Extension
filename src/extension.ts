@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { HelloWorldPanel } from "./HelloWorld";
 import { SidebarProvider } from "./SidebarProvider";
-import { unitTest } from "./unitTest";
+import { unitTest } from "./commands/unitTest";
 import { authenticate } from "./authenticate";
 import { TokenManager } from "./TokenManager";
 import { makeCodeSmellCommand } from "./commands/findcodesmell";
@@ -31,10 +31,10 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand("O.authenticate", () => {
-      authenticate();
+      authenticate(() =>  context.subscriptions.push());
     })
   );
-  
+
   context.subscriptions.push(
     vscode.commands.registerCommand("O.unitTest", () => {
       unitTest();
