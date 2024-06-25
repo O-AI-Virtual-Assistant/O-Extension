@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import * as vscode from "vscode";
   let message = '';
   let messages = [];
 

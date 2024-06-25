@@ -62,6 +62,10 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
         case "openChatPanel": {
           vscode.commands.executeCommand('O.newChat');
         }
+        case "openExplainPanel": {
+          console.log("in openExplainPanel")
+          vscode.commands.executeCommand('O.explainCode');
+        }
       }
     });
   }

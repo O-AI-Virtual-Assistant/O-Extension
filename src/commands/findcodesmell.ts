@@ -14,8 +14,8 @@ export const makeCodeSmellCommand = async () => {
 
     let generatedSmell = await generateCodeSmell(selectedText);
     if (!generatedSmell) {
-        generatedSmell = '// Failed to generate code smell.';
-        vscode.window.showErrorMessage('Failed to generate code smell.');
+        generatedSmell = '// Failed to generate refactoring changes.';
+        vscode.window.showErrorMessage('Failed to generate refactoring changes.');
     }
 
     await replaceCodeWithSmell(generatedSmell);
@@ -70,7 +70,7 @@ export const replaceCodeWithSmell = async (smellContent: string) => {
         editBuilder.replace(editor.selection, smellContent);
     });
 
-    vscode.window.showInformationMessage('Code smell generated successfully.');
+    vscode.window.showInformationMessage('Changes generated successfully.');
 };
 
 export const displayReplacedSmell = async () => {

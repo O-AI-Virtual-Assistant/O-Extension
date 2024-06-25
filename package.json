@@ -1,6 +1,6 @@
 {
   "name": "O",
-  "displayName": "O",
+  "displayName": "O-Virtual Assistant",
   "description": "An AI Virtual Assistant",
   "version": "0.0.1",
   "engines": {
@@ -63,11 +63,16 @@
         "title": "Back to Menu",
         "category": "O"
       },
-      {"command": "O.findCodeSmell",
+      {
+        "command": "O.findCodeSmell",
         "category": "O",
         "title": "Find Code Smell"
+      },
+      {
+        "command": "O.explainCode",
+        "category": "O",
+        "title": "Explain Code"
       }
-      
     ]
   },
   "scripts": {
@@ -109,8 +114,11 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "@types/marked": "^6.0.0",
     "es6-promise": "^4.2.8",
+    "highlight.js": "^11.9.0",
+    "marked": "^13.0.0",
+    "openai": "^4.52.0",
     "polka": "^0.5.2"
-
   }
 }

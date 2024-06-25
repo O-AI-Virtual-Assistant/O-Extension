@@ -15,12 +15,7 @@
       // vscode = acquireVsCodeApi();
       // console.log('VSCode API acquired:', vscode);
     });
-    
-    function handleExplainCode() {
-      if (onExplainCode) {
-        onExplainCode();
-      }
-    }
+
   
     function handleMakeDocumentation() {
       if (onMakeDocumentation) {
@@ -28,10 +23,14 @@
       }
     }
 
-
     function handleNewChat() {
       // Post a message to the VS Code extension to trigger opening the chat panel
       tsvscode.postMessage({ type: 'openChatPanel' });
+    }
+
+    function handleExplainCode() {
+      // Post a message to the VS Code extension to trigger opening the explain code panel
+      tsvscode.postMessage({ type: 'openExplainPanel' });
     }
 
     function handleEditCode() {
