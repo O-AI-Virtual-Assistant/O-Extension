@@ -2,7 +2,6 @@
   import { onMount } from 'svelte';
   import { marked, type Token, type Tokens } from 'marked';
   import hljs from 'highlight.js';
-  import 'highlight.js/styles/github.css';  // You can choose any other style you like
   
   let message = '';
   let messages = [];
@@ -10,12 +9,23 @@
   
   function sendMessage() {
     if (message.trim() !== '') {
-      const msg = { content: message, sender: 'user', id: Date.now() };
+      // Retrieve or generate session ID
+      let sessionId = localStorage.getItem('chatSessionId');
+      if (!sessionId) {
+        sessionId = generateSessionId();
+        localStorage.setItem('chatSessionId', sessionId);
+      }
+
+      const msg = { content: message, sender: 'user', sessionId: sessionId, id: Date.now() };
       tsvscode.postMessage({ type: 'newMessage', value: msg });
       messages = [...messages, msg];
       message = '';
       scrollChatToBottom();
     }
+  }
+
+  function generateSessionId() {
+    return '_' + Math.random().toString(36).substr(2, 9);
   }
   
   function scrollChatToBottom() {
@@ -29,9 +39,12 @@
   function renderMessage(content) {
     const renderer = new marked.Renderer();
   
-    renderer.code= (code, language = '') => {
-      const validLanguage = hljs.getLanguage(language) ? language : 'plaintext';
-      return `<pre><code class="hljs ${validLanguage}">${hljs.highlight(validLanguage, code as any).value}</code></pre>`;
+    renderer.code = (code) => {
+      const validLanguage = hljs.getLanguage(code.lang) ? code.lang : 'plaintext';
+      const highlighted = hljs.highlight(validLanguage, code.raw).value;
+      return `<pre><code class="hljs ${validLanguage}">${highlighted}</code></pre>`;
+      // const highlighted = hljs.highlightAuto(code.raw).value;
+      // return `<pre><code class="hljs">${highlighted}</code></pre>`;    
     };
   
     return marked(content, { renderer });
@@ -64,7 +77,7 @@
           <div class="logo-wrapper">
             <img src="media/Icon.png" alt="Chat with O Logo" class="chat-logo">
           </div>
-          <p>Welcome to Chat with O!</p>
+          <p>Welcome to your legendary Chat with O!</p>
           <p>Type your message below and hit Enter to send.</p>
           <p>Example queries:</p>
           <ul>

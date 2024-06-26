@@ -20,10 +20,19 @@ export class ChatPanelProvider {
       return;
     }
 
+    let targetColumn: vscode.ViewColumn;
+    if (column === vscode.ViewColumn.One) {
+      targetColumn = vscode.ViewColumn.Two;
+    } else if (column === vscode.ViewColumn.Two) {
+      targetColumn = vscode.ViewColumn.One;
+    } else {
+      targetColumn = vscode.ViewColumn.Beside;
+    }
+
     const panel = vscode.window.createWebviewPanel(
         'chat',
         'New Chat',
-        column || vscode.ViewColumn.Beside,
+        targetColumn,
         {
           enableScripts: true,
           localResourceRoots: [
@@ -119,14 +128,9 @@ private async sendMessageToServer(text: string) {
       });
 
       console.log("response: ", response);
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! status: ${response.status}`);
-      // }
 
       const data = await response.json();
       console.log('Success: ', data.answer);
-      // Assuming the server responds with the message or other data
-      // Update your UI here if needed:
       this.updateChatInView(data.answer);  // Ensure that your server is sending back a 'message' field in JSON
     });
   } catch (error) {
@@ -143,51 +147,58 @@ private updateChatInView(message: string) {
 }
 
 
-  private _getHtmlForWebview(webview: vscode.Webview) {
-    
-    // And the uri we use to load this script in the webview
-    const scriptUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._extensionUri, "out", "compiled/chat.js")
-    );
-    const cssUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._extensionUri, "out", "compiled/chat.css")
-    );
-    
-    const iconUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, "media", "speech_balloon.png"));
+private _getHtmlForWebview(webview: vscode.Webview) {
+  const scriptUri = webview.asWebviewUri(
+    vscode.Uri.joinPath(this._extensionUri, "out", "compiled/chat.js")
+  );
+  const cssUri = webview.asWebviewUri(
+    vscode.Uri.joinPath(this._extensionUri, "out", "compiled/chat.css")
+  );
 
-    // Local path to css styles
-    const styleResetUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._extensionUri, "media", "reset.css")
-    );
-    const styleVSCodeUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._extensionUri, "media", "vscode.css")
-    );
+  const highlightCssUri = webview.asWebviewUri(
+    vscode.Uri.joinPath(this._extensionUri, "media", "highlight/atom-one-dark.css")
+  );
 
-    // Use a nonce to only allow specific scripts to be run
-    const nonce = getNonce();
+  const highlightScriptUri = webview.asWebviewUri(
+    vscode.Uri.joinPath(this._extensionUri, "media", "highlight/highlight.min.js")
+  );
 
-    return `<!DOCTYPE html>
-			<html lang="en">
-			<head>
-        <link rel="icon" href="${iconUri}" type="image/png" />
-				
-        <meta charset="UTF-8">
-        <meta http-equiv="Content-Security-Policy" content="img-src https: data:${webview.cspSource}; style-src 'unsafe-inline' ${
-      webview.cspSource
-    }; script-src 'nonce-${nonce}';">
-				<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				  <link href="${styleResetUri}" rel="stylesheet">
-				  <link href="${styleVSCodeUri}" rel="stylesheet">
-          <link href="${cssUri}" rel="stylesheet">
-        <script nonce="${nonce}">    
-            const tsvscode = acquireVsCodeApi();
-            const apiBaseUrl = ${JSON.stringify(apiBaseUrl)};
-        </script>
-			</head>
-      <body>
-        <script nonce="${nonce}" src="${scriptUri}"></script>
-      </body>
-      </html>`;
+  const iconUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, "media", "speech_balloon.png"));
+
+  const styleResetUri = webview.asWebviewUri(
+    vscode.Uri.joinPath(this._extensionUri, "media", "reset.css")
+  );
+  const styleVSCodeUri = webview.asWebviewUri(
+    vscode.Uri.joinPath(this._extensionUri, "media", "vscode.css")
+  );
+
+  const nonce = getNonce();
+
+  return `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <link rel="icon" href="${iconUri}" type="image/png" />
+      <meta charset="UTF-8">
+      <meta http-equiv="Content-Security-Policy" content="img-src https: data:${webview.cspSource}; style-src 'unsafe-inline' ${
+        webview.cspSource
+      }; script-src 'nonce-${nonce}';">				
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link href="${styleResetUri}" rel="stylesheet">
+      <link href="${styleVSCodeUri}" rel="stylesheet">
+      <link href="${cssUri}" rel="stylesheet">
+      <link href="${highlightCssUri}" rel="stylesheet">
+      <script nonce="${nonce}" src="${highlightScriptUri}"></script>
+      <script nonce="${nonce}"> hljs.highlightAll(); </script>
+      <script nonce="${nonce}">    
+        const tsvscode = acquireVsCodeApi();
+        const apiBaseUrl = ${JSON.stringify(apiBaseUrl)};
+      </script>
+    </head>
+    <body>
+      <script nonce="${nonce}" src="${scriptUri}"></script>
+    </body>
+    </html>`;
+
   }
 }
 
