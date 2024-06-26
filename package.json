@@ -57,6 +57,11 @@
         "command": "O.findCodeSmell",
         "category": "O",
         "title": "Find Code Smell"
+      },
+      {
+        "command": "O.documentCode",
+        "category": "O",
+        "title": "Document Code"
       }
     ],
     "menus": {

@@ -5,6 +5,7 @@ import { unitTest } from "./commands/unitTest";
 import { authenticate } from "./authenticate";
 import { TokenManager } from "./TokenManager";
 import { makeCodeSmellCommand } from "./commands/findcodesmell";
+import { documentCodeCommand } from "./commands/documentCode";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "O" is now active!');
@@ -69,6 +70,10 @@ export function activate(context: vscode.ExtensionContext) {
   );
   let disposable = vscode.commands.registerCommand('O.findCodeSmell', makeCodeSmellCommand);
   context.subscriptions.push(disposable);
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("O.documentCode", documentCodeCommand)
+  );
 }
 
 export function deactivate() {}
