@@ -3,7 +3,7 @@
     import { onMount } from 'svelte';
 
     export let onExplainCode;
-    export let onMakeDocumentation;
+    // export let onMakeDocumentation;
     export let onNewChat;
     export let onEditCode;
     export let onGenerateUnitTests;
@@ -22,10 +22,8 @@
       }
     }
   
-    function handleMakeDocumentation() {
-      if (onMakeDocumentation) {
-        onMakeDocumentation();
-      }
+    function handleDocumentCode() {
+      tsvscode.postMessage({ type: 'documentCode' });
     }
 
 
@@ -64,9 +62,9 @@
       <span class="icon">📝</span>
       <span>Explain Code</span>
     </div>
-    <div class="option" on:click={handleMakeDocumentation}>
+    <div class="option" on:click={handleDocumentCode}>
       <span class="icon">📄</span>
-      <span>Make Documentation</span>
+      <span>Document Code</span>
     </div>
     <div class="option" on:click={handleNewChat}>
       <span class="icon">💬</span>

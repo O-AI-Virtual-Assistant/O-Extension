@@ -2,9 +2,11 @@ import * as vscode from "vscode";
 import { HelloWorldPanel } from "./HelloWorld";
 import { SidebarProvider } from "./SidebarProvider";
 import { ChatPanelProvider } from "./chatPanelProvider";
-import { unitTest } from "./unitTest";
+import { unitTest } from "./commands/unitTest";
 import { authenticate } from "./authenticate";
 import { TokenManager } from "./TokenManager";
+import { makeCodeSmellCommand } from "./commands/findcodesmell";
+import { documentCodeCommand } from "./commands/documentCode";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "O" is now active!');
@@ -34,10 +36,12 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand("O.authenticate", () => {
-      authenticate(()=>{});
+      // authenticate(()=>{});
+
+      authenticate(() =>  context.subscriptions.push());
     })
   );
-  
+
   context.subscriptions.push(
     vscode.commands.registerCommand("O.unitTest", () => {
       unitTest();
@@ -75,6 +79,12 @@ export function activate(context: vscode.ExtensionContext) {
         });
       }
     })
+  );
+  let disposable = vscode.commands.registerCommand('O.findCodeSmell', makeCodeSmellCommand);
+  context.subscriptions.push(disposable);
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("O.documentCode", documentCodeCommand)
   );
 }
 
