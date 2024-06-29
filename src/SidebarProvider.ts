@@ -65,6 +65,10 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
         case "documentCode": {
           vscode.commands.executeCommand('O.documentCode');
         }
+        case "openExplainPanel": {
+          console.log("in openExplainPanel")
+          vscode.commands.executeCommand('O.explainCode');
+        }
       }
     });
   }

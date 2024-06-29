@@ -7,6 +7,8 @@ import { authenticate } from "./authenticate";
 import { TokenManager } from "./TokenManager";
 import { makeCodeSmellCommand } from "./commands/findcodesmell";
 import { documentCodeCommand } from "./commands/documentCode";
+// import { unitTest } from "./unitTest";
+import { makeExplainCodeCommand } from "./explainPanelProvider";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "O" is now active!');
@@ -22,7 +24,6 @@ export function activate(context: vscode.ExtensionContext) {
   item.command = "O.AskO";
 
   const sidebarProvider = new SidebarProvider(context.extensionUri);
- 
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider("O-sidebar", sidebarProvider)
   );
@@ -47,10 +48,14 @@ export function activate(context: vscode.ExtensionContext) {
     })
   );
 
-
   vscode.commands.registerCommand('O.newChat', () => {
     console.log("Command O.newChat triggered");
     ChatPanelProvider.createOrShow(context.extensionUri);
+  });
+
+  vscode.commands.registerCommand('O.explainCode', () => {
+    console.log("Command O.explainCode triggered");
+    makeExplainCodeCommand(context.extensionUri);
   });
 
   context.subscriptions.push(

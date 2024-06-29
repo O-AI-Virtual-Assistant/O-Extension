@@ -1,6 +1,6 @@
 {
   "name": "O",
-  "displayName": "O",
+  "displayName": "O-Virtual Assistant",
   "description": "An AI Virtual Assistant",
   "version": "0.0.1",
   "engines": {
@@ -72,6 +72,11 @@
         "command": "O.documentCode",
         "category": "O",
         "title": "Document Code"
+      },
+      {
+        "command": "O.explainCode",
+        "category": "O",
+        "title": "Explain Code"
       }
     ],
     "menus": {
