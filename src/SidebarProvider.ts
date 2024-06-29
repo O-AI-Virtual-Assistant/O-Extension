@@ -7,7 +7,7 @@ import { authenticate } from "./authenticate";
 export class SidebarProvider implements vscode.WebviewViewProvider {
   _view?: vscode.WebviewView;
   _doc?: vscode.TextDocument;
-  private _isVisible: boolean = false;
+  // private _isVisible: boolean = false;
 
   constructor(private readonly _extensionUri: vscode.Uri) {}
 

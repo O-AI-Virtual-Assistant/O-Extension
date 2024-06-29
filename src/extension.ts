@@ -14,7 +14,7 @@ export function activate(context: vscode.ExtensionContext) {
   TokenManager.globalState = context.globalState;
 
   const item = vscode.window.createStatusBarItem(
-    vscode.StatusBarAlignment.Right,
+  vscode.StatusBarAlignment.Right,
     100
   );
   item.text = "$(beaker) Ask O";
@@ -22,8 +22,7 @@ export function activate(context: vscode.ExtensionContext) {
   item.command = "O.AskO";
 
   const sidebarProvider = new SidebarProvider(context.extensionUri);
-  // const chatProvider = new ChatPanelProvider(context.extensionUri);
-  
+ 
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider("O-sidebar", sidebarProvider)
   );
@@ -52,7 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.commands.registerCommand('O.newChat', () => {
     console.log("Command O.newChat triggered");
     ChatPanelProvider.createOrShow(context.extensionUri);
-  })
+  });
 
   context.subscriptions.push(
     vscode.commands.registerCommand("O.AskO", () => {

@@ -1,8 +1,7 @@
+import Chat from "../components/Chat.svelte";
 
-import App from "../components/Chat.svelte";
-
-const app = new App({
+const chat = new Chat({
 	target: document.body,
 });
 
-export default app;
+export default chat;
