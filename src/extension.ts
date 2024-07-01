@@ -84,8 +84,9 @@ export function activate(context: vscode.ExtensionContext) {
       }
     })
   );
-  let disposable = vscode.commands.registerCommand('O.findCodeSmell', makeCodeSmellCommand);
-  context.subscriptions.push(disposable);
+   // Register the command
+   const disposable = vscode.commands.registerCommand('O.findCodeSmell', makeCodeSmellCommand);
+   context.subscriptions.push(disposable);
 
   context.subscriptions.push(
     vscode.commands.registerCommand("O.documentCode", documentCodeCommand)

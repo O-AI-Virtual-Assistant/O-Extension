@@ -64,9 +64,9 @@
         "category": "O"
       },
       {
-        "command": "O.findCodeSmell",
+         "command": "O.findCodeSmell",
         "category": "O",
-        "title": "Find Code Smell"
+        "title": "find Code Smell"
       },
       {
         "command": "O.documentCode",
