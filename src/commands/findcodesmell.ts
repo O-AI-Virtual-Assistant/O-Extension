@@ -1,15 +1,7 @@
 import * as vscode from 'vscode';
 import { OpenAI } from 'openai';
-import * as dotenv from "dotenv";
 
-// Load environment variables from .env file
-dotenv.config();
-
-const apiKey = "sk-proj-v7vk1qBAkYHA8fOtXhqvT3BlbkFJ8VBIdph3fJ7ya5kxDaXf";
-if (!apiKey) {
-  vscode.window.showErrorMessage("OpenAI API key is missing. Please set it in the .env file.");
-  throw new Error("OpenAI API key is missing. Please set it in the .env file.");
-}
+const apiKey = 'sk-proj-v7vk1qBAkYHA8fOtXhqvT3BlbkFJ8VBIdph3fJ7ya5kxDaXf';
 
 const openai = new OpenAI({ apiKey: apiKey });
 
@@ -43,7 +35,6 @@ const getSelectedText = async () => {
 export const generateCodeSmell = async (selectedCode: string) => {
     const userMessage = `Introduce code smells into the following code:
     ${selectedCode}
-
     Code smells to introduce:
     - Long Method: Add unnecessary code to make the function longer.
     - Duplicate Code: Repeat the same logic unnecessarily.
