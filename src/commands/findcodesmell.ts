@@ -13,13 +13,13 @@ export const makeCodeSmellCommand = async () => {
         return; // Exit the function
     }
 
-    let generatedSmell = await generateCodeSmell(selectedText); // Generate code smell from selected text
+    let generatedSmell = await detectAndGenerateCodeSmell(selectedText); // Generate code smell from selected text
     if (!generatedSmell) { // Check if code smell generation failed
         generatedSmell = '// Failed to generate code smell.'; // Set failure message as generated smell
         vscode.window.showErrorMessage('Failed to generate code smell.'); // Show error message
     }
 
-    let refactoredCode = await detectAndRefactorCodeSmell(selectedText); // Detect and refactor code smells from selected text
+    let refactoredCode = await detectAndRefactorCodeSmell(generatedSmell); // Detect and refactor code smells from generated smell
     if (!refactoredCode) { // Check if code smell detection and refactoring failed
         refactoredCode = '// Failed to detect and refactor code smells.'; // Set failure message as refactored code
         vscode.window.showErrorMessage('Failed to detect and refactor code smells.'); // Show error message
@@ -39,17 +39,18 @@ const getSelectedText = async () => {
     return editor.document.getText(editor.selection); // Return the selected text
 };
 
-export const generateCodeSmell = async (selectedCode: string) => {
-    // Function to generate code smell using OpenAI
-    const userMessage = `Introduce code smells into the following code:
-    ${selectedCode}
-    Code smells to introduce:
-    - Long Method: Add unnecessary code to make the function longer.
-    - Duplicate Code: Repeat the same logic unnecessarily.
-    - Comments: Add redundant comments that explain obvious code.
-    - Unnecessary Variables: Introduce unnecessary variables.
-    - Complexity: Add unnecessary complexity.
-    - Magic Numbers: Use hard-coded numbers with no explanation.`; // User message to instruct OpenAI on how to introduce code smells
+export const detectAndGenerateCodeSmell = async (selectedCode: string) => {
+    // Function to detect and generate code smell using OpenAI
+    const userMessage = `Please analyze the following code and introduce potential code smells. Make sure to:
+    - Introduce unnecessary complexity.
+    - Add redundant comments.
+    - Include unnecessary variables.
+    - Use magic numbers without explanation.
+    - Add duplicate code logic.
+    - Make functions excessively long.
+
+    Here is the code:
+    ${selectedCode}`; // User message to instruct OpenAI on how to introduce code smells
 
     try {
         const response = await openai.chat.completions.create({
@@ -66,10 +67,11 @@ export const generateCodeSmell = async (selectedCode: string) => {
     }
 };
 
-export const detectAndRefactorCodeSmell = async (selectedCode: string) => {
+export const detectAndRefactorCodeSmell = async (generatedSmell: string) => {
     // Function to detect and refactor code smells using OpenAI
-    const userMessage = `Detect code smells in the following code and suggest refactorings:
-    ${selectedCode}
+    const userMessage = `Please detect the code smells in the following code and suggest refactorings to improve it:
+    ${generatedSmell}
+
     Code smells to detect and refactor:
     - Long Method
     - Duplicate Code
@@ -116,7 +118,7 @@ const getWebviewContent = (generatedSmell: string, refactoredCode: string): stri
             <title>Detected Code Smell and Refactored Code</title>
         </head>
         <body>
-            <h2>detect Code Smell</h2>
+            <h2>Generated Code Smell</h2>
             <pre>${generatedSmell}</pre> <!-- Display the generated smell inside a <pre> tag -->
             <h2>Refactored Code</h2>
             <pre>${refactoredCode}</pre> <!-- Display the refactored code inside a <pre> tag -->
