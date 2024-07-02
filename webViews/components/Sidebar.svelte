@@ -49,6 +49,16 @@
       tsvscode.postMessage({ type: "logout", value: undefined });
     }}>Logout</button
   >
+
+  <Menu
+    {onExplainCode}
+    {onMakeDocumentation}
+    {onNewChat}
+    {onEditCode}
+    {onGenerateUnitTests}
+    {onFindCodeSmells}
+    {onCustomCommands}
+  />
 {:else}
   <!-- svelte-ignore missing-declaration -->
   <button
@@ -57,13 +67,3 @@
     }}>Log In</button
   >
 {/if}
-
-<Menu
-  {onExplainCode}
-  {onMakeDocumentation}
-  {onNewChat}
-  {onEditCode}
-  {onGenerateUnitTests}
-  {onFindCodeSmells}
-  {onCustomCommands}
-/>
