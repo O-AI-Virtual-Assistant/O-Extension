@@ -1,6 +1,7 @@
 {
-  "name": "O",
+  "name": "O-Virtual-Assistant",
   "displayName": "O-Virtual Assistant",
+  "publisher": "O-AI-Virtual-Assistant",
   "description": "An AI Virtual Assistant",
   "version": "0.0.1",
   "engines": {
@@ -34,11 +35,6 @@
     },
     "commands": [
       {
-        "command": "O.helloWorld",
-        "category": "O",
-        "title": "Hello World"
-      },
-      {
         "command": "O.AskO",
         "category": "O",
         "title": "Make a Query"
@@ -64,7 +60,7 @@
         "category": "O"
       },
       {
-         "command": "O.findCodeSmell",
+        "command": "O.findCodeSmell",
         "category": "O",
         "title": "find Code Smell"
       },
@@ -88,6 +84,26 @@
         },
         {
           "command": "O.unitTest",
+          "when": "editorTextFocus",
+          "group": "navigation"
+        },
+        {
+          "command": "O.findCodeSmell",
+          "when": "editorTextFocus",
+          "group": "navigation"
+        },
+        {
+          "command": "O.documentCode",
+          "when": "editorTextFocus",
+          "group": "navigation"
+        },
+        {
+          "command": "O.explainCode",
+          "when": "editorTextFocus",
+          "group": "navigation"
+        },
+        {
+          "command": "O.newChat",
           "when": "editorTextFocus",
           "group": "navigation"
         }
@@ -135,11 +151,11 @@
   "dependencies": {
     "@types/highlight.js": "^10.1.0",
     "@types/marked": "^6.0.0",
-    "es6-promise": "^4.2.8",
     "dotenv": "^16.4.5",
-    "openai": "^4.52.0",
+    "es6-promise": "^4.2.8",
     "highlight.js": "^11.9.0",
     "marked": "^13.0.0",
+    "openai": "^4.52.0",
     "polka": "^0.5.2"
   }
 }

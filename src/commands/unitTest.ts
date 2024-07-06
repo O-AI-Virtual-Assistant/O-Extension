@@ -57,11 +57,12 @@ export const generateUnitTest = async (selectedCode: string) => {
     Edge Cases: Include tests for boundary conditions and special values.
     Error Cases: Include tests to check for proper error handling for invalid inputs.
     Assertions: Ensure assertions verify that the results are as expected.
+
     Deliverables:
     A complete unit test script.
     Comments explaining each test case and its importance.
-    A brief explanation of the testing framework used.
-    please return to me only the code for the unit test and nothing else in a proper format.`;
+    please return to me only the code for the unit test and nothing else,
+    in a proper format that can run in vs code file straight away.`;
 
   try {
     const response = await openai.chat.completions.create({

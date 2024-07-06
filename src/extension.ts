@@ -7,7 +7,6 @@ import { authenticate } from "./authenticate";
 import { TokenManager } from "./TokenManager";
 import { makeCodeSmellCommand } from "./commands/findcodesmell";
 import { documentCodeCommand } from "./commands/documentCode";
-// import { unitTest } from "./unitTest";
 import { makeExplainCodeCommand } from "./explainPanelProvider";
 
 export function activate(context: vscode.ExtensionContext) {
@@ -19,9 +18,9 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.StatusBarAlignment.Right,
     100
   );
-  item.text = "$(beaker) Ask O";
+  item.text = "$(beaker) Authenticate";
   item.show();
-  item.command = "O.AskO";
+  item.command = "O.Authenticate";
 
   const sidebarProvider = new SidebarProvider(context.extensionUri);
   context.subscriptions.push(
@@ -36,8 +35,6 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand("O.authenticate", () => {
-      // authenticate(()=>{});
-
       authenticate(() =>  context.subscriptions.push());
     })
   );
