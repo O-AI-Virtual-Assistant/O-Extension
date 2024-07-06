@@ -1,7 +1,7 @@
 import * as vscode from 'vscode'; // Import VSCode API
 import { OpenAI } from 'openai'; // Import OpenAI API
 
-const apiKey = 'sk-proj-v7vk1qBAkYHA8fOtXhqvT3BlbkFJ8VBIdph3fJ7ya5kxDaXf'; // OpenAI API key
+const apiKey = 'sk-proj-8gSonZhpoLDlstoGYjCRT3BlbkFJfH3rmCfkhHQ50hNSQLd6'; // OpenAI API key
 
 const openai = new OpenAI({ apiKey: apiKey }); // Create an OpenAI instance with the API key
 
@@ -15,8 +15,8 @@ export const makeCodeSmellCommand = async () => {
 
     let generatedSmell = await detectAndGenerateCodeSmell(selectedText); // Generate code smell from selected text
     if (!generatedSmell) { // Check if code smell generation failed
-        generatedSmell = '// Failed to generate code smell.'; // Set failure message as generated smell
-        vscode.window.showErrorMessage('Failed to generate code smell.'); // Show error message
+        generatedSmell = '// Failed to detect code smell.'; // Set failure message as generated smell
+        vscode.window.showErrorMessage('Failed to detect code smell.'); // Show error message
     }
 
     let refactoredCode = await detectAndRefactorCodeSmell(generatedSmell); // Detect and refactor code smells from generated smell
@@ -41,20 +41,21 @@ const getSelectedText = async () => {
 
 export const detectAndGenerateCodeSmell = async (selectedCode: string) => {
     // Function to detect and generate code smell using OpenAI
-    const userMessage = `Please analyze the following code and introduce potential code smells. Make sure to:
-    - Introduce unnecessary complexity.
-    - Add redundant comments.
-    - Include unnecessary variables.
-    - Use magic numbers without explanation.
-    - Add duplicate code logic.
-    - Make functions excessively long.
+    const userMessage = `Please analyze the following code and detect potential code smells. Make sure to:
+    - Improve unnecessary complexity.
+    - Remove redundant comments.
+    - Remove unnecessary variables.
+    - Remove used magic numbers without explanation.
+    - Remove duplicate code logic.
+    - Prevent making functions excessively long.
+    - Also make any suggestions fit to improve the quality of code
 
     Here is the code:
     ${selectedCode}`; // User message to instruct OpenAI on how to introduce code smells
 
     try {
         const response = await openai.chat.completions.create({
-            model: 'gpt-3.5-turbo',
+            model: 'gpt-4-turbo',
             messages: [{ role: 'user', content: userMessage }],
         }); // Call OpenAI API to generate the response
 
@@ -99,7 +100,7 @@ export const displayInSidePanel = async (generatedSmell: string, refactoredCode:
     // Function to display content in a side panel
     const panel = vscode.window.createWebviewPanel(
         'codeSmellAndRefactor', // Identifies the type of the webview. Used internally
-        'Generated Code Smell and Refactored Code', // Title of the panel displayed to the user
+        'Detect Code Smells and Refactor Code', // Title of the panel displayed to the user
         vscode.ViewColumn.Beside, // Editor column to show the new webview panel in.
         {} // Webview options. More on these later.
     ); // Create a new webview panel
@@ -118,9 +119,9 @@ const getWebviewContent = (generatedSmell: string, refactoredCode: string): stri
             <title>Detected Code Smell and Refactored Code</title>
         </head>
         <body>
-            <h2>Generated Code Smell</h2>
-            <pre>${generatedSmell}</pre> <!-- Display the generated smell inside a <pre> tag -->
-            <h2>Refactored Code</h2>
+            <h2>Detected Code Smells</h2>
+            <pre>${generatedSmell}</pre> <!-- Display the detected code smell inside a <pre> tag -->
+            <h2>Refactored Code suggestions</h2>
             <pre>${refactoredCode}</pre> <!-- Display the refactored code inside a <pre> tag -->
         </body>
         </html>

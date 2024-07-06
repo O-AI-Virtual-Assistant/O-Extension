@@ -88,6 +88,20 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand("O.documentCode", documentCodeCommand)
   );
+
+  // context.subscriptions.push(
+  //   vscode.commands.registerCommand("O.documentCode", ()=>{
+  //     console.log("O.documentCode truggered")
+  //     documentCodeCommand()
+  //   })
+  // );
+
+  // context.subscriptions.push(
+  //   vscode.commands.registerCommand("O.findCodeSmell", ()=>{
+  //     console.log("O.findCodeSmell truggered")
+  //     makeCodeSmellCommand()
+  //   })
+  // );
 }
 
 export function deactivate() {}

@@ -3,7 +3,7 @@ import { OpenAI } from "openai";
 import * as path from "path";
 import * as fs from "fs";
 
-const apiKey = "sk-proj-v7vk1qBAkYHA8fOtXhqvT3BlbkFJ8VBIdph3fJ7ya5kxDaXf"
+const apiKey = "sk-proj-8gSonZhpoLDlstoGYjCRT3BlbkFJfH3rmCfkhHQ50hNSQLd6"
 
 const openai = new OpenAI({ apiKey: apiKey });
 
@@ -88,13 +88,13 @@ export const createNewTestFile = async (unitTestContent: string) => {
 
   const currentFilePath = editor.document.uri.fsPath;
   const currentDir = path.dirname(currentFilePath);
-  const testFileName = path.join(currentDir, "generated_unit_test.py");
+  const testFileName = path.join(currentDir, "generated_unit_test.txt");
 
   try {
     fs.writeFileSync(testFileName, unitTestContent, { encoding: "utf8" });
     const document = await vscode.workspace.openTextDocument(testFileName);
     await vscode.window.showTextDocument(document);
-    vscode.window.showInformationMessage("Unit Tests generated and saved to generated_unit_test.py");
+    vscode.window.showInformationMessage("Unit Tests generated and saved to generated_unit_test.txt");
   } catch (error) {
     console.error("Error writing new test file:", error);
     vscode.window.showErrorMessage("Error writing new test file.");

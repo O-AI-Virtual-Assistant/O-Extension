@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { OpenAI } from 'openai';
 
-const apiKey='sk-proj-v7vk1qBAkYHA8fOtXhqvT3BlbkFJ8VBIdph3fJ7ya5kxDaXf';
+const apiKey='sk-proj-8gSonZhpoLDlstoGYjCRT3BlbkFJfH3rmCfkhHQ50hNSQLd6';
 
 const openai = new OpenAI({ apiKey: apiKey });
 

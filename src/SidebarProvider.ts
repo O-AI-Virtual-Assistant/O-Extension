@@ -3,6 +3,8 @@ import { getNonce } from "./getNonce";
 import { apiBaseUrl } from "./constants";
 import { TokenManager } from "./TokenManager";
 import { authenticate } from "./authenticate";
+import { makeCodeSmellCommand } from "./commands/findcodesmell";
+import { documentCodeCommand } from "./commands/documentCode";
 
 export class SidebarProvider implements vscode.WebviewViewProvider {
   _view?: vscode.WebviewView;
